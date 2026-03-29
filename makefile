@@ -6,5 +6,10 @@ test_arena: src/memory/arena.c tests/unity/unity.c tests/test_arena.c
 
 test_gemm: src/ops/gemm.c tests/unity/unity.c tests/test_gemm.c
 	$(CC) $(CFLAGS) src/ops/gemm.c tests/unity/unity.c tests/test_gemm.c -o test_gemm.exe
+
+test_conv2d: src/ops/conv2d.c tests/unity/unity.c tests/test_conv2d.c
+	$(CC) $(CFLAGS) src/ops/conv2d.c tests/unity/unity.c tests/test_conv2d.c -o test_conv2d.exe
 clean:
 	del test_arena.exe
+	del test_gemm.exe
+	del test_conv2d.exe
