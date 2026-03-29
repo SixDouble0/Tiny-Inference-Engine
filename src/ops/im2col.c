@@ -28,9 +28,9 @@ void im2col(const int8_t *input,    // input feature map
                             val = input[in_row * in_w * in_ch + in_col * in_ch + c];
                         }
                         // Calculate the output index for the matrix after im2col transformation
-                        int row = i * out_w + j;
-                        int col = k * kernel_w * in_ch + l * in_ch + c;
-                        int out_idx = row * (kernel_h * kernel_w * in_ch) + col;
+                        int row_idx = i * out_w + j;
+                        int col_idx = k * kernel_w * in_ch + l * in_ch + c;
+                        int out_idx = row_idx * (kernel_h * kernel_w * in_ch) + col_idx;
                         output[out_idx] = val; // Store the input pixel value in the output matrix
                     }
                 }
