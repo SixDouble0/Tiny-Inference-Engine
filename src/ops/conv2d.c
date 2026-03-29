@@ -1,5 +1,3 @@
-#include <stdint.h>
-
 #include "conv2d.h"
 
 void conv2d(
@@ -17,13 +15,16 @@ void conv2d(
     int out_w = (in_w + 2 * padding - kernel_w) / stride + 1; 
 
     // Perform convolution
+   // Iterate over the output feature map 
     for (int i = 0; i < out_h; i++) {
         for (int j = 0; j < out_w; j++) {
+            // Iterate over the output channels (filters)
             for (int f = 0; f < out_ch; f++) {
                 int32_t sum = 0; // Accumulate the convolution sum for the current output pixel
-                // Iterate over the kernel and input channels to compute the convolution sum
+                // Iterate over the kernel
                 for (int k = 0; k < kernel_h; k++) {
                     for (int l = 0; l < kernel_w; l++) {
+                        // Iterate over the input channels inside the kernel
                         for (int c = 0; c < in_ch; c++) {
                             // Calculate the corresponding input pixel position, accounting for stride and padding
                             int in_row = i * stride + k - padding;
