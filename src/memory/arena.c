@@ -1,7 +1,7 @@
-#include "arena.h"
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "arena.h"
 // Note to me When defining a function that takes a pointer to a struct,
 // do not forget to use * because & is available only in C++
 void arena_init(Arena * arena, size_t size){

@@ -1,20 +1,24 @@
 #include <time.h>
+#include <string.h>
 
 #include "unity/unity.h"
 #include "../src/ops/gemm.h"
 
 
-void setUp(void) {}
+void setUp(void) {
+    memset(C, 0, sizeof(C));
+}
 void tearDown(void) {}
 
-// Test for the naive GEMM implementation to verify correctness
-void test_gemm_naive_correctness(void) {
-    // Define input matrices A and B, and the expected output matrix C
-    int8_t A[4] = {1, 2, 3, 4}; // 2x2 matrix
-    int8_t B[4] = {5, 6, 7, 8}; // 2x2 matrix
-    int32_t C[4] = {0}; // Result matrix initialized to zero
-    int32_t expected_C[4] = {19, 22, 43, 50}; // Expected result of A * B
+// Define input matrices A and B, and the expected output matrix C
+static int8_t A[4] = {1, 2, 3, 4}; // 2x2 matrix
+static int8_t B[4] = {5, 6, 7, 8}; // 2x2 matrix
+static int32_t C[4] = {0}; // Result matrix initialized to zero
+static int32_t expected_C[4] = {19, 22, 43, 50}; // Expected result of A * B
 
+
+// Test for the naive GEMM 
+void test_gemm_naive_correctness(void) {
     // Call the GEMM function
     gemm_naive(A, B, C, 2, 2, 2);
     // Verify that the output matches the expected result
@@ -23,13 +27,8 @@ void test_gemm_naive_correctness(void) {
     }
 }
 
+// Test for the optimized GEMM 
 void test_gemm_optimized_correctness(void) {
-    // Define input matrices A and B, and the expected output matrix C
-    int8_t A[4] = {1, 2, 3, 4}; // 2x2 matrix
-    int8_t B[4] = {5, 6, 7, 8}; // 2x2 matrix
-    int32_t C[4] = {0}; // Result matrix initialized to zero
-    int32_t expected_C[4] = {19, 22, 43, 50}; // Expected result of A * B
-
     // Call the optimized GEMM function
     gemm_optimized(A, B, C, 2, 2, 2);
     // Verify that the output matches the expected result

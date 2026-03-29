@@ -18,6 +18,7 @@ void test_arena_init(void) {
     arena_destroy(&arena);
 }
 
+// Test for arena allocation
 void test_arena_alloc(void) {
     Arena arena = {0};
     arena_init(&arena, 1024);
@@ -37,6 +38,7 @@ void test_arena_alloc(void) {
     arena_destroy(&arena);
 }
 
+// Test for arena allocation alignment
 void test_arena_alignment(void) {
     Arena arena = {0};
     arena_init(&arena, 1024);
@@ -50,6 +52,7 @@ void test_arena_alignment(void) {
     arena_destroy(&arena);
 }
 
+// Test for arena reset functionality
 void test_arena_reset(void) {
     Arena arena = {0};
     arena_init(&arena, 1024);
