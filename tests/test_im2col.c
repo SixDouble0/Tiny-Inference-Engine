@@ -1,4 +1,5 @@
 #include "unity/unity.h"
+#include "time.h"
 #include "../src/ops/im2col.h"
 #include "../src/ops/conv2d.h"
 #include "../src/ops/gemm.h"
@@ -80,7 +81,7 @@ void im2col_vs_conv2d_test(void) {
     int8_t col[36] = {0};
     int32_t output_fast[9] = {0};
 
-    
+
     im2col(input, col, in_h, in_w, in_ch, kernel_h, kernel_w, stride, padding);
 
     //             A[9×4]  B[4×1]   C[9×1]       M=9  N=1     K=4
@@ -93,10 +94,42 @@ void im2col_vs_conv2d_test(void) {
     }
 }
 
+void benchmark_im2col_vs_conv2d(void) {
+    // bigger input to showcase a difference in performance, e.g. 28x28 like MNIST
+    // np. 28x28 like MNIST
+    static int8_t input[784];
+    static int8_t weights[288]; // 32 filters 3x3x1
+    static int32_t output_naive[26*26*32];
+    static int8_t col[26*26*9];
+    static int32_t output_fast[26*26*32];
+
+    clock_t start, end; 
+
+    // Initialize input and weights with some values
+    for (int i = 0; i < 784; i++) input[i] = (int8_t)(i % 128);
+    for (int i = 0; i < 288; i++) weights[i] = (int8_t)(i % 64);
+
+    // naive conv2d
+    start = clock();
+    for (int i = 0; i < 1000; i++)
+        conv2d(input, weights, output_naive, 28, 28, 1, 32, 3, 3, 1, 0);
+    end = clock();
+    printf("conv2d naive: %f ms\n", (double)(end-start)/CLOCKS_PER_SEC*1000/1000);
+
+    // im2col + gemm
+    start = clock();
+    for (int i = 0; i < 1000; i++) {
+    im2col(input, col, 28, 28, 1, 3, 3, 1, 0);
+    gemm_optimized(col, weights, output_fast, 26*26, 32, 9);
+    }
+    end = clock();
+    printf("im2col+gemm:  %f ms\n", (double)(end-start)/CLOCKS_PER_SEC*1000/1000);
+}
 int main(){
     UNITY_BEGIN();
     RUN_TEST(im2col_test);
     RUN_TEST(im2col_vs_conv2d_test);
+    RUN_TEST(benchmark_im2col_vs_conv2d);
     return UNITY_END();
 }
 
