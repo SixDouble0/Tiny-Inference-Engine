@@ -1,6 +1,5 @@
 #include "requantize.h"
 
-#include <stdint.h>
 void requantize(
     const int32_t *input, // input data to be requantized
     int8_t        *output, // output buffer for requantized data
@@ -12,11 +11,11 @@ void requantize(
 ){
     for (int i = 0; i < size; i++) {
         // multiplier for scaling the input values 
-        int64_t result = (int8_t)((input64_t)input[i] * multiplier)                 
+        int64_t result = (int64_t)input[i] * multiplier;                 
         // shift for scaling the input values (right shift)
-        >> shift) 
+        result >>= shift; 
         // Add zero point for quantization
-        + zero_point;
+        result += zero_point;
 
         // Clamp the output values to the int8 range [-128, 127]
         if (result > 127) {
@@ -24,6 +23,7 @@ void requantize(
         } else if (result < -128) {
             result = -128;
         }
-        output[i] = int8_t(result);
+        // Store the requantized value in the output buffer
+        output[i] = (int8_t)result;
     }
 }
