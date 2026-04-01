@@ -1,8 +1,8 @@
 #include "unity/unity.h"
 #include "time.h"
-#include "../src/ops/im2col.h"
-#include "../src/ops/conv2d.h"
-#include "../src/ops/gemm.h"
+#include "../src/operations/im2col.h"
+#include "../src/operations/conv2d.h"
+#include "../src/operations/gemm.h"
 
 void setUp(void) {}
 void tearDown(void) {}

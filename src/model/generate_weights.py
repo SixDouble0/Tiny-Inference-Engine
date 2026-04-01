@@ -8,10 +8,17 @@ import numpy as np
 class SimpleCNN(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = nn.Conv2d(1, 4, 3, padding=0)   
-        self.conv2 = nn.Conv2d(4, 8, 3, padding=0)   
-        self.fc1 = nn.Linear(24*24*8, 16)             
-        self.fc2 = nn.Linear(16, 10)
+        self.conv1 = nn.Conv2d(1, 32, 3, padding=0)
+        self.conv2 = nn.Conv2d(32, 64, 3, padding=0)
+        self.fc1 = nn.Linear(24*24*64, 128)
+        self.fc2 = nn.Linear(128, 10)
+    
+    def forward(self, x):
+        x = torch.relu(self.conv1(x))
+        x = torch.relu(self.conv2(x))
+        x = x.flatten(1)
+        x = torch.relu(self.fc1(x))
+        return self.fc2(x)
 
 # Create model with random weights (for testing)
 model = SimpleCNN()

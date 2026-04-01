@@ -1,11 +1,11 @@
 #include "im2col.h"
 
-void im2col(const int8_t *input,    // input feature map
-    int8_t       *output,   // output matrix after im2col transformation
-    int in_h, int in_w,     // size of the input feature map
-    int in_ch,              // number of input channels
-    int kernel_h, int kernel_w, // size of the convolution kernel
-    int stride, int padding // stride and padding for convolution
+void im2col(const int8_t *input,  // input feature map
+    int8_t       *output,         // output matrix after im2col transformation
+    int in_h, int in_w,           // size of the input feature map
+    int in_ch,                    // number of input channels
+    int kernel_h, int kernel_w,   // size of the convolution kernel
+    int stride, int padding       // stride and padding for convolution
 ){
     // Calculate output dimensions
     int out_h = (in_h + 2 * padding - kernel_h) / stride + 1;

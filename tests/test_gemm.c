@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "unity/unity.h"
-#include "../src/ops/gemm.h"
+#include "../src/operations/gemm.h"
 
 
 void setUp(void) {

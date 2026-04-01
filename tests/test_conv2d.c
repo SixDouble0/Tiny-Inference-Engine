@@ -1,5 +1,5 @@
 #include "unity/unity.h"
-#include "../src/ops/conv2d.h"
+#include "../src/operations/conv2d.h"
 
 void setUp(void) {}
 void tearDown(void) {}

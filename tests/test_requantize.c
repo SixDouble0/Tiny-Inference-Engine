@@ -1,5 +1,5 @@
 #include "unity/unity.h"
-#include "../src/ops/requantize.h"
+#include "../src/operations/requantize.h"
 
 void setUp(void) {}
 void tearDown(void) {}
@@ -13,10 +13,10 @@ void requantize_clamp_test(void) {
     int shift = 0; // No shift
     int32_t zero_point = 0; // Zero point for quantization
 
-    // Expected output after requantization (clamped to int8 range)
+
     int8_t expected_output[10] = {127, -128, 127, -128, 0, 127, -128, 127, -128, 127};
 
-    // Perform requantization
+
     requantize(input, output, size, multiplier, shift, zero_point);
 
     // Verify the output against the expected result

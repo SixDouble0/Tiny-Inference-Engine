@@ -1,6 +1,6 @@
 #include "unity/unity.h"
 
-#include "../src/ops/relu.h"
+#include "../src/operations/relu.h"
 
 void setUp(void) {}
 void tearDown(void) {}
