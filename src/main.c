@@ -27,7 +27,10 @@ static int argmax(const float *arr, int size) {
     return best;
 }
 
-int main(void) {
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
+void app_main(void) {
     Arena arena;
     arena_init(&arena, 2 * 1024 * 1024); // 2MB
 
@@ -107,5 +110,4 @@ int main(void) {
     printf("Peak arena usage: %zu bytes\n", arena.peak_usage);
 
     arena_destroy(&arena);
-    return 0;
 }

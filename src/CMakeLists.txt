@@ -1,0 +1,17 @@
+idf_component_register(
+    SRCS 
+        "main.c"
+        "memory/arena.c"
+        "model/loader.c"
+        "operations/conv2d.c"
+        "operations/gemm.c"
+        "operations/im2col.c"
+        "operations/relu.c"
+        "operations/requantize.c"
+        "operations/softmax.c"
+    INCLUDE_DIRS 
+        "."
+        "memory"
+        "model"
+        "operations"
+)
