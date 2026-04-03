@@ -1,6 +1,6 @@
-#include "unity/unity.h"
+#include <unity.h>
 
-#include "../src/operations/relu.h"
+#include "../../src/operations/relu.h"
 
 void setUp(void) {}
 void tearDown(void) {}
@@ -16,8 +16,8 @@ void relu_test(void) {
     }
 }
 
-int main(void) {
+void app_main(void) {
     UNITY_BEGIN();
     RUN_TEST(relu_test);
-    return UNITY_END();
+    UNITY_END();
 }

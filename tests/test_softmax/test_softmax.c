@@ -1,5 +1,5 @@
-#include "unity/unity.h"
-#include "../src/operations/softmax.h"
+#include <unity.h>
+#include "../../src/operations/softmax.h"
 
 void setUp(void) {}
 void tearDown(void) {}
@@ -16,8 +16,8 @@ void softmax_test(void) {
     }
 }
 
-int main(void) {
+void app_main(void) {
     UNITY_BEGIN();
     RUN_TEST(softmax_test);
-    return UNITY_END();
+    UNITY_END();
 }

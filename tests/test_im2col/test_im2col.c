@@ -1,8 +1,9 @@
-#include "unity/unity.h"
+#include <stdio.h>
 #include "time.h"
-#include "../src/operations/im2col.h"
-#include "../src/operations/conv2d.h"
-#include "../src/operations/gemm.h"
+#include <unity.h>
+#include "../../src/operations/im2col.h"
+#include "../../src/operations/conv2d.h"
+#include "../../src/operations/gemm.h"
 
 void setUp(void) {}
 void tearDown(void) {}
@@ -125,11 +126,11 @@ void benchmark_im2col_vs_conv2d(void) {
     end = clock();
     printf("im2col+gemm:  %f ms\n", (double)(end-start)/CLOCKS_PER_SEC*1000/1000);
 }
-int main(void){
+void app_main(void){
     UNITY_BEGIN();
     RUN_TEST(im2col_test);
     RUN_TEST(im2col_vs_conv2d_test);
     RUN_TEST(benchmark_im2col_vs_conv2d);
-    return UNITY_END();
+    UNITY_END();
 }
 

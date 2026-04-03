@@ -1,5 +1,5 @@
-#include "unity/unity.h"
-#include "../src/operations/requantize.h"
+#include <unity.h>
+#include "../../src/operations/requantize.h"
 
 void setUp(void) {}
 void tearDown(void) {}
@@ -44,9 +44,9 @@ void requantize_scaling_test(void) {
         TEST_ASSERT_EQUAL_INT8(expected[i], output[i]);
 }    
 
-int main(void) {
+void app_main(void) {
     UNITY_BEGIN();
     RUN_TEST(requantize_clamp_test);
     RUN_TEST(requantize_scaling_test);
-    return UNITY_END();
+    UNITY_END();
 }

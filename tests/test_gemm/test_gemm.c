@@ -1,20 +1,20 @@
 #include <time.h>
 #include <string.h>
+#include <stdio.h>
 
-#include "unity/unity.h"
-#include "../src/operations/gemm.h"
-
-
-void setUp(void) {
-    memset(C, 0, sizeof(C));
-}
-void tearDown(void) {}
+#include <unity.h>
+#include "../../src/operations/gemm.h"
 
 // Define input matrices A and B, and the expected output matrix C
 static int8_t A[4] = {1, 2, 3, 4}; // 2x2 matrix
 static int8_t B[4] = {5, 6, 7, 8}; // 2x2 matrix
 static int32_t C[4] = {0}; // Result matrix initialized to zero
 static int32_t expected_C[4] = {19, 22, 43, 50}; // Expected result of A * B
+
+void setUp(void) {
+    memset(C, 0, sizeof(C));
+}
+void tearDown(void) {}
 
 
 // Test for the naive GEMM 
@@ -40,12 +40,12 @@ void test_gemm_optimized_correctness(void) {
 // NOT A UNITY TEST
 void performance_test_gemm_naive(void) {
     // Define larger input matrices A and B, and the output matrix C
-    int M = 1000;
-    int N = 1000;
-    int K = 1000;
-    static int8_t A[1000000]; // 1000x1000 matrix
-    static int8_t B[1000000]; // 1000x1000 matrix
-    static int32_t C[1000000] = {0}; // Result matrix initialized to zero
+    int M = 100;
+    int N = 100;
+    int K = 100;
+    static int8_t A[10000]; // 100x100 matrix
+    static int8_t B[10000]; // 100x100 matrix
+    static int32_t C[10000] = {0}; // Result matrix initialized to zero
 
     // Initialize A and B with some values
     for (int i = 0; i < M * K; i++) {
@@ -74,10 +74,10 @@ void performance_test_gemm_naive(void) {
     printf("Time taken for gemm_optimized: %f seconds\n", time_taken_optimized);
 }
 
-int main(void) {
+void app_main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_gemm_naive_correctness);
     RUN_TEST(test_gemm_optimized_correctness);
     RUN_TEST(performance_test_gemm_naive);
-    return UNITY_END();
+    UNITY_END();
 }

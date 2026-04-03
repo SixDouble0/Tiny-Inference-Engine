@@ -1,5 +1,5 @@
-#include "unity/unity.h"
-#include "../src/memory/arena.h"
+#include <unity.h>
+#include "../../src/memory/arena.h"
 
 void setUp(void) {}
 void tearDown(void) {}
@@ -67,12 +67,12 @@ void test_arena_reset(void) {
     arena_destroy(&arena);
 }
 
-int main(void) {
+void app_main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_arena_init);
     RUN_TEST(test_arena_alloc);
     RUN_TEST(test_arena_alignment);
     RUN_TEST(test_arena_reset);
-    return UNITY_END();
+    UNITY_END();
 }
 

@@ -20,16 +20,23 @@
 #define FC1_OUT   16
 #define FC2_OUT   10
 
+#ifndef PIO_UNIT_TESTING
 static int argmax(const float *arr, int size) {
     int best = 0;
     for (int i = 1; i < size; i++)
         if (arr[i] > arr[best]) best = i;
     return best;
 }
+#endif
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#ifndef PIO_UNIT_TESTING
+#warning "PIO_UNIT_TESTING is not defined"
+#endif
+
+#ifndef PIO_UNIT_TESTING
 void app_main(void) {
     Arena arena;
     arena_init(&arena, 2 * 1024 * 1024); // 2MB
@@ -111,3 +118,4 @@ void app_main(void) {
 
     arena_destroy(&arena);
 }
+#endif

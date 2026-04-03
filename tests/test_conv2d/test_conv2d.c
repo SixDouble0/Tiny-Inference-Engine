@@ -1,5 +1,5 @@
-#include "unity/unity.h"
-#include "../src/operations/conv2d.h"
+#include <unity.h>
+#include "../../src/operations/conv2d.h"
 
 void setUp(void) {}
 void tearDown(void) {}
@@ -70,8 +70,8 @@ void conv2d_test(void) {
     TEST_ASSERT_NOT_EQUAL(0, output1[0]); // something that doesnt equal zero to ensure convolution is performed
 }
 
-int main(void){
+void app_main(void){
     UNITY_BEGIN();
     RUN_TEST(conv2d_test);
-    return UNITY_END();
+    UNITY_END();
 }
