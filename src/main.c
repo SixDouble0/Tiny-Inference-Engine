@@ -99,12 +99,8 @@ void app_main(void) {
     };
     int num_layers = sizeof(layers) / sizeof(layers[0]);
 
-    // Input - wyrysowana ręcznie jedynka "1" na srodku obrazka (rozmiar 28x28, wartosci 0 do 127)
+    // Input - blank canvas (all zeros)
     int8_t input[IN_H * IN_W] = {0};
-    for (int r = 5; r < 23; r++) {
-        input[r * IN_W + 14] = 127; // Główna pionowa kreska
-        input[r * IN_W + 13] = 100; // Lekkie wygładzenie (antyaliasing)
-    }
 
     // Inference
     float output[FC2_OUT];
