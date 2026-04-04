@@ -5,7 +5,7 @@ void setUp(void) {}
 void tearDown(void) {}
 
 void softmax_test(void) {
-    int32_t input[4] = {1, 2, 3, 4};
+    int8_t input[4] = {1, 2, 3, 4};
     float output[4] = {0.0f};
     float expected[4] = {0.0321f, 0.0871f, 0.2369f, 0.6439f}; // Precomputed softmax values
 

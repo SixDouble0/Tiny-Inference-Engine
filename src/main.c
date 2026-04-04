@@ -20,26 +20,25 @@
 #define FC1_OUT   16
 #define FC2_OUT   10
 
-#ifndef PIO_UNIT_TESTING
 static int argmax(const float *arr, int size) {
     int best = 0;
     for (int i = 1; i < size; i++)
         if (arr[i] > arr[best]) best = i;
     return best;
 }
-#endif
+
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-#ifndef PIO_UNIT_TESTING
-#warning "PIO_UNIT_TESTING is not defined"
-#endif
 
-#ifndef PIO_UNIT_TESTING
+
+
 void app_main(void) {
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
+
     Arena arena;
-    arena_init(&arena, 2 * 1024 * 1024); // 2MB
+    arena_init(&arena, 154 * 1024); // 154 KB
 
     // Layer parameters 
     Conv2DParams conv1_params = {
@@ -100,8 +99,12 @@ void app_main(void) {
     };
     int num_layers = sizeof(layers) / sizeof(layers[0]);
 
-    // Input - blank canvas (all zeros)
+    // Input - wyrysowana ręcznie jedynka "1" na srodku obrazka (rozmiar 28x28, wartosci 0 do 127)
     int8_t input[IN_H * IN_W] = {0};
+    for (int r = 5; r < 23; r++) {
+        input[r * IN_W + 14] = 127; // Główna pionowa kreska
+        input[r * IN_W + 13] = 100; // Lekkie wygładzenie (antyaliasing)
+    }
 
     // Inference
     float output[FC2_OUT];
@@ -118,4 +121,3 @@ void app_main(void) {
 
     arena_destroy(&arena);
 }
-#endif

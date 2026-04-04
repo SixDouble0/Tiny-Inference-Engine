@@ -67,7 +67,7 @@ void performance_test_gemm_comparison(void) {
     printf("Time taken for gemm: %lld microseconds\n", end_time_naive - start_time_naive);
 
     // Test various tile sizes dynamically
-    int tiles_to_test[] = {4, 8, 16, 24, 32, 64, 96, 128, 256, 512}; // Different tile sizes to test
+    int tiles_to_test[] = {4, 8, 16, 24, 32, 64, 96, 128, 256}; // Different tile sizes to test
     int num_tiles = sizeof(tiles_to_test) / sizeof(tiles_to_test[0]);
 
     for (int t = 0; t < num_tiles; t++) {

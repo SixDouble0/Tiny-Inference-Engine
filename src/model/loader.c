@@ -70,7 +70,7 @@ int run_inference(const Layer *layers, int num_layers,
                 // allocate buffer for fully connected layer output (int8_t after requantization)
                 int8_t *fc_out = (int8_t *)arena_alloc(arena, ptr->out_size);
 
-                gemm_optimized(current, ptr->weights, gemm_out_fc,
+                gemm_naive(current, ptr->weights, gemm_out_fc,
                                1, ptr->out_size, ptr->in_size);
 
                 requantize(gemm_out_fc, fc_out, ptr->out_size,
@@ -82,7 +82,7 @@ int run_inference(const Layer *layers, int num_layers,
             }
 
             case LAYER_TYPE_SOFTMAX:
-                softmax((int32_t *)current, current_size, output);
+                softmax((int8_t *)current, current_size, output);
                 break;
         }
     }
