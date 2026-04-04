@@ -25,12 +25,12 @@ void gemm_naive(
 // Performance test for the optimized GEMM implementation with O2 optimization
 //Time taken for size 64: 1.567000 seconds
 //Time taken for size 32: 1.458000 seconds
-//Time taken for size 16: 1.023000 seconds
-//Time taken for size 8: 0.567000 seconds
+//Time taken for size 16: 00:00:09.188 seconds
+//Time taken for size 8: 00:00:11.038 seconds
 //time mesurements may vary based on microcontroller you use.
 //In general, the optimized version should be faster than the naive version, especially for larger matrix sizes,
 //due to better cache utilization.
-#define TILE_SIZE 16
+#define TILE_SIZE 32
 
 void gemm_optimized(
     const int8_t *A,  // weight of the matrix
@@ -57,4 +57,4 @@ void gemm_optimized(
             }
         }
     }
-}
+}void gemm_dynamic_tile(const int8_t *A, const int8_t *B, int32_t *C, int M, int N, int K, int tile_size) { for (int i = 0; i < M; i += tile_size) { for (int j = 0; j < N; j += tile_size) { for (int k = 0; k < K; k += tile_size) { for (int ii = i; ii < i + tile_size && ii < M; ii++) { for (int jj = j; jj < j + tile_size && jj < N; jj++) { int32_t sum = 0; for (int kk = k; kk < k + tile_size && kk < K; kk++) { sum += (int32_t)A[ii * K + kk] * (int32_t)B[kk * N + jj]; } C[ii * N + jj] += sum; } } } } } }

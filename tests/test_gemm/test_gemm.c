@@ -1,7 +1,9 @@
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
-
+#include "esp_timer.h" // ESP32 high-resolution timer
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include <unity.h>
 #include "../../src/operations/gemm.h"
 
@@ -36,9 +38,9 @@ void test_gemm_optimized_correctness(void) {
         TEST_ASSERT_EQUAL_INT32(expected_C[i], C[i]);
     }
 }
-// Performance test for the naive GEMM implementation
+// Performance test comparing Naive and Tiled GEMM implementations
 // NOT A UNITY TEST
-void performance_test_gemm_naive(void) {
+void performance_test_gemm_comparison(void) {
     // Define larger input matrices A and B, and the output matrix C
     int M = 100;
     int N = 100;
@@ -56,28 +58,39 @@ void performance_test_gemm_naive(void) {
     }
 
     // Measure the time taken by the GEMM function
-
-    //Naive GEMM performance test
-    clock_t start_time_naive = clock();
+    
+    // Naive GEMM performance test
+    int64_t start_time_naive = esp_timer_get_time();
     gemm_naive(A, B, C, M, N, K);
-    clock_t end_time_naive = clock();
+    int64_t end_time_naive = esp_timer_get_time();
 
-    //Optimized GEMM performance test
-    clock_t start_time_optimized = clock();
-    gemm_optimized(A, B, C, M, N, K);
-    clock_t end_time_optimized = clock();
+    printf("Time taken for gemm: %lld microseconds\n", end_time_naive - start_time_naive);
 
-    // Calculate and print the time taken for both implementations
-    double time_taken_naive = (double)(end_time_naive - start_time_naive) / CLOCKS_PER_SEC;
-    double time_taken_optimized = (double)(end_time_optimized - start_time_optimized) / CLOCKS_PER_SEC;
-    printf("Time taken for gemm_naive: %f seconds\n", time_taken_naive);
-    printf("Time taken for gemm_optimized: %f seconds\n", time_taken_optimized);
+    // Test various tile sizes dynamically
+    int tiles_to_test[] = {4, 8, 16, 24, 32, 64, 96, 128, 256, 512}; // Different tile sizes to test
+    int num_tiles = sizeof(tiles_to_test) / sizeof(tiles_to_test[0]);
+
+    for (int t = 0; t < num_tiles; t++) {
+        int tile_size = tiles_to_test[t];
+        memset(C, 0, sizeof(C)); // reset matrix for fair comparison
+        
+        int64_t start_time_tiled = esp_timer_get_time();
+        gemm_dynamic_tile(A, B, C, M, N, K, tile_size);
+        int64_t end_time_tiled = esp_timer_get_time();
+
+        printf("Time taken for TILE_SIZE %d: %lld microseconds\n", tile_size, end_time_tiled - start_time_tiled);
+    }
 }
 
+
+
 void app_main(void) {
+    // Wait a second for serial port monitor to fully open
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+
     UNITY_BEGIN();
     RUN_TEST(test_gemm_naive_correctness);
     RUN_TEST(test_gemm_optimized_correctness);
-    RUN_TEST(performance_test_gemm_naive);
+    RUN_TEST(performance_test_gemm_comparison);
     UNITY_END();
 }

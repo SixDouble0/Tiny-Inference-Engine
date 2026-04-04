@@ -23,4 +23,13 @@ void gemm_optimized(
     int           K   // columns of A / rows of B
 );
 
+void gemm_dynamic_tile(
+    const int8_t *A,
+    const int8_t *B,
+    int32_t      *C,
+    int           M,
+    int           N,
+    int           K,
+    int           tile_size
+);
 #endif // gemm.h

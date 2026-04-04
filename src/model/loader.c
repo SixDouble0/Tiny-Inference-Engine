@@ -37,7 +37,9 @@ int run_inference(const Layer *layers, int num_layers,
                 im2col(current, col_buf, ptr->in_h, ptr->in_w, ptr->in_ch,
                        ptr->kernel_h, ptr->kernel_w, ptr->stride, ptr->padding);
                 
-                gemm_optimized(col_buf, ptr->weights, gemm_out,
+                // Using optimized GEMM naive convolution because for small matrix sizes
+                // it's performing the best on ESP32 devkitv1.
+                gemm_naive(col_buf, ptr->weights, gemm_out,
                                out_h * out_w, ptr->out_ch, ptr->kernel_h * ptr->kernel_w * ptr->in_ch);
                 
                 requantize(gemm_out, conv_out, out_h * out_w * ptr->out_ch,
