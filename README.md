@@ -1,8 +1,8 @@
-# Tiny Inference Engine
+# Tiny AI Inference Engine
 
-Tiny Inference Engine is a compact, production-oriented neural network inference runtime written in C. The project focuses on deterministic memory usage, explicit data flow, and INT8-first execution for constrained environments.
+Tiny AI Inference Engine is a compact, production-oriented neural network inference runtime written in C. The project focuses on deterministic memory usage, explicit data flow, and INT8-first execution for constrained environments.
 
-The repository is centered on the core inference engine. ESP32 integration is available, validated, and fully usable for hardware tests and deployment, but it is optional.
+This repository is centered on the core AI inference engine. ESP32 integration is available, validated, and fully usable for hardware tests and deployment, but it is optional.
 
 ## Why This Project
 
